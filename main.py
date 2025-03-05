@@ -1,17 +1,20 @@
 from bs4 import BeautifulSoup
-import requests
+import requests, os
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+from dotenv import load_dotenv
+
+load_dotenv()
 
 sp = spotipy.Spotify(
     auth_manager=SpotifyOAuth(
-        scope="playlist-modify-private",
-        redirect_uri="http://example.com",
-        client_id="a342e9d6c7ec40c080653b34ba342b5f",
-        client_secret="b05b3244dbc249c2960c02cb616a9e89",
+        scope=os.environ['SPOTIFY_SCOPE'],
+        redirect_uri=os.environ['SPOTIFY_REDIRECT_URI'],
+        client_id=os.environ['SPOTIFY_CLIENT_ID'],
+        client_secret=os.environ['SPOTIFY_CLIENT_SECRET'],
         show_dialog=True,
-        cache_path="token.txt",
-        username="Stoimenov",
+        cache_path=os.environ['SPOTIFY_CACHE_PATH'],
+        username=os.environ['SPOTIFY_USERNAME'],
     )
 )
 user_id = sp.current_user()["id"]
